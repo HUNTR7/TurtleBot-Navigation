@@ -1,0 +1,18 @@
+<launch>
+  <!-- Launch Gazebo with the world file -->
+  <arg name="world_file" default="$(find my_gazebo_package)/worlds/my_world.world" />
+  <node name="gazebo" pkg="gazebo_ros" type="gazebo" args="--verbose $(arg world_file)" output="screen" />
+
+  <!-- Spawn Turtlebot model -->
+  <node name="spawn_turtlebot" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model turtlebot -x 0 -y 0 -z 0.5" />
+  
+  <!-- Spawn person model -->
+  <node name="spawn_person" pkg="gazebo_ros" type="spawn_model" args="-urdf -param person_description -model person -x 1 -y 0 -z 0.5" />
+
+  <!-- Control the movement of Turtlebot -->
+  <node name="turtlebot_controller" pkg="turtlebot3_teleop" type="turtlebot3_teleop_key" output="screen" />
+
+  <!-- Control the movement of person -->
+  <node name="person_controller" pkg="my_person_controller_package" type="my_person_controller_node" output="screen" />
+</launch>
+
